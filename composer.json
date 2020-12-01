@@ -1,0 +1,22 @@
+{
+    "name": "zhiguang/helps",
+    "description": "助手类",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "zhiguang",
+            "email": "936246674@qq.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=7.0.0"
+    },
+    "autoload": {
+    "psr-4": {
+        "src\\": "src"
+    }
+}
+
+}
