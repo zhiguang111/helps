@@ -1,5 +1,5 @@
 <?php
-namespace src\time;
+namespace src\helps;
 
 class Times
 {
