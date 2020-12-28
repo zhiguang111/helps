@@ -40,9 +40,9 @@ class Times
     /**
      * 获取某年有多少周
      * @param $year
-     * @return string
+     * @return Strings
      */
-    public function getWeekNum($year)
+    public static function getWeekNum($year)
     {
         $yearEndTime = strtotime(date('Y', $year) . '-12-31 00:00:00');
         return strftime("%U", $yearEndTime);
@@ -50,9 +50,9 @@ class Times
 
     /**
      * 获取今天是今年的第几周
-     * @return string
+     * @return Strings
      */
-    public function getThisYearWeek()
+    public static function getThisYearWeek()
     {
         return strftime("%U", time());
     }
@@ -62,30 +62,30 @@ class Times
      * @param $year
      * @return array
      */
-    public function getYearWeekTime($year)
+    public static function getYearWeekTime($year)
     {
         $startTime = strtotime(date('Y', $year) . '-01-01 00:00:00');
-        $allWeek = $this->getWeekNum($year);
+        $allWeek = self::getWeekNum($year);
 
-        return $this->getTimeList($allWeek, $startTime);
+        return self::getTimeList($allWeek, $startTime);
     }
 
     /**
      * 获取当前时间所有周开始结束时间
      * @return array
      */
-    public function getThisYearWeekTime()
+    public static function getThisYearWeekTime()
     {
         $nowYear = substr(date('Y-m-d', time()), 0, 4);
         $startTime = strtotime(date('Y', $nowYear) . '-01-01 00:00:00');
         $allWeek = strftime("%U", time());
 
-        return $this->getTimeList($allWeek, $startTime);
+        return self::getTimeList($allWeek, $startTime);
 
     }
 
 
-    private function getTimeList($allWeek, $startTime)
+    private static function getTimeList($allWeek, $startTime)
     {
         $timeList = [];
         for ($i = 0; $i < $allWeek; $i++) {
