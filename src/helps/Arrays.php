@@ -34,4 +34,16 @@ class Arrays
         return $arr;
     }
 
+    /**
+     * 判断元素是否在数组中
+     * @param $search
+     * @param $arr
+     * @return bool
+     */
+    public static function in_array($search, $arr)
+    {
+        $arr = array_flip($arr);
+
+        return isset($arr[$search]);
+    }
 }

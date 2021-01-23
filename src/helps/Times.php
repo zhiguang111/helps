@@ -45,7 +45,8 @@ class Times
     public static function getWeekNum($year)
     {
         $yearEndTime = strtotime(date('Y', $year) . '-12-31 00:00:00');
-        return strftime("%U", $yearEndTime);
+
+        return strftime("%W", $yearEndTime);
     }
 
     /**
@@ -54,49 +55,58 @@ class Times
      */
     public static function getThisYearWeek()
     {
-        return strftime("%U", time());
+        return strftime("%W", time());
     }
 
     /**
      * 获取某一年全部周开始结束时间
      * @param $year
+     * @param $month
+     * @param $week
      * @return array
      */
-    public static function getYearWeekTime($year)
+    public static function getYearWeekTime($year, $month = 0, $week = 0)
     {
-        $startTime = strtotime(date('Y', $year) . '-01-01 00:00:00');
-        $allWeek = self::getWeekNum($year);
+        $year = strtotime(date('Y', $year) . '-01-01 00:00:00');
 
-        return self::getTimeList($allWeek, $startTime);
+        return self::getTimeList($year, $month, $week);
     }
 
     /**
-     * 获取当前时间所有周开始结束时间
+     * 获取当年时间所有周开始结束时间
+     * @param $month
+     * @param $week
      * @return array
      */
-    public static function getThisYearWeekTime()
+    public static function getThisYearWeekTime($month = 0, $week = 0)
     {
-        $nowYear = substr(date('Y-m-d', time()), 0, 4);
-        $startTime = strtotime(date('Y', $nowYear) . '-01-01 00:00:00');
-        $allWeek = strftime("%U", time());
+        $year = strtotime(date('Y', time()) . '-01-01 00:00:00');
 
-        return self::getTimeList($allWeek, $startTime);
+        return self::getTimeList($year, $month, $week);
 
     }
 
 
-    private static function getTimeList($allWeek, $startTime)
+    private static function getTimeList($year = 0, $month = 0, $week = 0)
     {
         $timeList = [];
-        for ($i = 0; $i < $allWeek; $i++) {
-            $s = strtotime(date('Y-m-d H:i:s', strtotime('+' . $i . 'week', $startTime)));
-            $e = strtotime(date('Y-m-d H:i:s', strtotime('+' . ($i + 1) . 'week', $startTime)));
-            $timeList[$i] = [
-                'start_time' => $s,
-                'end_time' => $e
-            ];
+        if ($year < 1970 || empty($year)) {
+            return $timeList;
+        }
+        $allWeek = self::getWeekNum($year);
+        if (!empty($month)) {
+            $timeStr = $year . '-' . $month;
         }
 
+//        for ($i = 0; $i < $allWeek; $i++) {
+//            $s = strtotime(date('Y-m-d H:i:s', strtotime('+' . $i . 'week', $startTime)));
+//            $e = strtotime(date('Y-m-d H:i:s', strtotime('+' . ($i + 1) . 'week', $startTime)));
+//            $timeList[$i] = [
+//                'start_time' => $s,
+//                'end_time' => $e
+//            ];
+//        }
+//
         return $timeList;
     }
 }
